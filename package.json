@@ -1,0 +1,23 @@
+{
+  "name": "todo-cli-mongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musfirotus/Todo-CLI-Mongo.git"
+  },
+  "author": "Musfirotus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/musfirotus/Todo-CLI-Mongo/issues"
+  },
+  "homepage": "https://github.com/musfirotus/Todo-CLI-Mongo#readme",
+  "dependencies": {
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.26"
+  }
+}
