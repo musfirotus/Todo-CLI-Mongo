@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/musfirotus/Todo-CLI-Mongo#readme",
   "dependencies": {
+    "@caporal/core": "^2.0.2",
     "mongodb": "^3.5.9",
-    "mongoose": "^5.9.26"
+    "mongoose": "^5.9.26",
+    "prompt": "^1.0.0"
   }
 }
