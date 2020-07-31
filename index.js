@@ -2,17 +2,8 @@ const mongoose = require('mongoose')
 const todoModel = require('./models/todoModel')
 const db = require('./config/db')
 const { program } = require('@caporal/core')
-// const { prompt } = require('prompt')
 
 program.version("1.0.0").description("ToDoList-CLI-APP-MongoDB");
-
-// Tambah Banyak Data Todo List
-const insertMany = async () => {
-    const insertMany = await todoModel.insertMany([
-        { item: "Makan siang", cek: true },
-        { item: "Cuci pakaian" }
-    ]);
-}
 
 // Tampilkan Data Todo List
 const listTodo = async () => {
@@ -44,12 +35,10 @@ program
     .command('todo add', 'Add todo list in database')
     .argument('<addid>', "Add todo to db")
     .argument('<add>', "Add todo to db")
-    .action(({ args }) => {
-        (async () => {
-            const todo = new todoModel ({ _id: args.addid, item: args.add }, error);
-            await todo.save();
-            await listTodo();
-        })();
+    .action(async ({ args }) => {
+        const todo = new todoModel ({ _id: args.addid, item: args.add}, error);
+        await todo.save();
+        await listTodo();
     })
 
     // Update todo list
@@ -57,29 +46,56 @@ program
     .command('todo update', 'Edit entri todo')
     .argument('<updateId>', 'id yang ingin diedit')
     .argument('<update>', 'Hasil yang diedit')
-    .action(({ args }) => {
-        (async () => {
-            await todoModel.updateOne(
-                { _id:args.updateId },
-                { item:args.update },
-                error
-            )
-            listTodo();
-        })();
+    .action(async ({ args }) => {
+        await todoModel.updateOne(
+            { _id:args.updateId },
+            { item:args.update },
+            error
+        )
+        await listTodo();
     })
 
     // Delete todo list
-    // How to run :
+    // How to run : node index.js todo del <id>
     .command('todo del', 'Hapus salah satu todo list')
     .argument('<deleteId>', 'id yang ingin di delete')
-    .action(({ args }) => {
-        (async () => {
-            await todoModel.deleteOne(
-                { _id:args.deleteId },
-                error
-            )
-            listTodo();
-        })();
+    .action(async ({ args }) => {
+        await todoModel.deleteOne(
+            { _id:args.deleteId },
+            error
+        )
+        await listTodo();
+    })
+
+    // Clear all todo list
+    // How to run : node index.ja todo clear
+    // .command('todo clear', 'Hapus semua data todo list')
+    // .action()
+
+    // Update status todo list ke status 'Done'
+    // How to run : node index.js todo done <id>
+    .command('todo done', 'Edit status menjadi \'Done\'')
+    .argument('<updateId>', 'id yang ingin diedit')
+    .action(async ({ args }) => {
+        await todoModel.updateOne(
+            { _id: args.updateId },
+            { cek: true },
+            error
+        )
+        await listTodo();
+    })
+
+    // Update status todo list ke status 'Undone'
+    // How to run : node index.js todo undone <id>
+    .command('todo undone', 'Edit status menjadi \'Undone\'')
+    .argument('<updateId>', 'id yang ingin diedit')
+    .action(async ({ args }) => {
+        await todoModel.updateOne(
+            { _id: args.updateId },
+            { cek: false },
+            error
+        )
+        await listTodo();
     })
     
 program.run();
