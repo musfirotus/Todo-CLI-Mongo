@@ -20,6 +20,6 @@
     "@caporal/core": "^2.0.2",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.26",
-    "prompt": "^1.0.0"
+    "prompt-sync": "^4.2.0"
   }
 }
