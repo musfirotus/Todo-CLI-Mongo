@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const todoModel = require('./models/todoModel')
 const db = require('./config/db')
 const { program } = require('@caporal/core')
+const prompt = require('prompt-sync')({sigint: true});
 
 program.version("1.0.0").description("ToDoList-CLI-APP-MongoDB");
 
@@ -13,9 +14,11 @@ const listTodo = async () => {
         else if(lis.cek == false) console.log(`${lis._id}. ${lis.item}.`);
         else console.log('Error');
     })
-    mongoose.disconnect();
+    await mongoose.disconnect();
+    console.log(`Disconnect!`);
 }
 
+// Check if error
 const error = (error, result)=>{
     console.log(error, result);
 }
@@ -68,9 +71,23 @@ program
     })
 
     // Clear all todo list
-    // How to run : node index.ja todo clear
-    // .command('todo clear', 'Hapus semua data todo list')
-    // .action()
+    // How to run : node index.js todo clear
+    .command('todo clear', 'Hapus semua data todo list')
+    .action(async () => {
+        const answer = prompt('Apakah Anda yakin menghapus semua todo list? (y/N) : ');
+        if(answer == "y" || answer == "Y") {
+            (async()=>{
+                await todoModel.deleteMany({}, error)
+                console.log('Data berhasil dihapus!');
+                await listTodo();
+            })();
+        } else if(answer == "n" || answer == "N") {
+            console.log('Batal menghapus!');
+            await listTodo();
+        } else {
+            console.log(`Error : ${error}`);
+        }
+    })
 
     // Update status todo list ke status 'Done'
     // How to run : node index.js todo done <id>
