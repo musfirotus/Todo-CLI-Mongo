@@ -53,15 +53,29 @@ program
     })
 
     // Update todo list
-    // How to run :
+    // How to run : node index.js todo update <id> <item>
     .command('todo update', 'Edit entri todo')
-    .argument('updateId', 'id yang ingin diedit')
-    .argument('update', 'Hasil yang diedit')
+    .argument('<updateId>', 'id yang ingin diedit')
+    .argument('<update>', 'Hasil yang diedit')
     .action(({ args }) => {
         (async () => {
             await todoModel.updateOne(
                 { _id:args.updateId },
                 { item:args.update },
+                error
+            )
+            listTodo();
+        })();
+    })
+
+    // Delete todo list
+    // How to run :
+    .command('todo del', 'Hapus salah satu todo list')
+    .argument('<deleteId>', 'id yang ingin di delete')
+    .action(({ args }) => {
+        (async () => {
+            await todoModel.deleteOne(
+                { _id:args.deleteId },
                 error
             )
             listTodo();
