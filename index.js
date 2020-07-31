@@ -49,9 +49,23 @@ program
             const todo = new todoModel ({ _id: args.addid, item: args.add }, error);
             await todo.save();
             await listTodo();
-            await mongoose.disconnect();
         })();
     })
 
+    // Update todo list
+    // How to run :
+    .command('todo update', 'Edit entri todo')
+    .argument('updateId', 'id yang ingin diedit')
+    .argument('update', 'Hasil yang diedit')
+    .action(({ args }) => {
+        (async () => {
+            await todoModel.updateOne(
+                { _id:args.updateId },
+                { item:args.update },
+                error
+            )
+            listTodo();
+        })();
+    })
     
 program.run();
