@@ -1,10 +1,10 @@
 # Todo-CLI-Mongo
 Directory :
   - config :
-     > db.js
+     - db.js
         ~ untuk koneksi ke database 'todo'.
   - models :
-     > todoModel.js
+     - todoModel.js
         ~ untuk membuat schema dan model aplikasi.
   - .gitignore
       ~ folder yang dicantumkan akan dikecualikan oleh git version.
