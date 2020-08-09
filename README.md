@@ -1,5 +1,7 @@
 # Todo-CLI-Mongo
-Directory :
+## Week 2 Day 4
+- Link review Mandiri :https://bit.ly/Todo-CLI-Mongo
+### Directory :
   - config :
      - db.js
         ~ untuk koneksi ke database 'todo'.
